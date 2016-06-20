@@ -12,6 +12,7 @@ var apply = {
     styling: function() {
 
     },
+    loadedJobs: [],
     events: function() {
         $('#logInButton').on('click', function() {
           event.preventDefault();
@@ -39,6 +40,7 @@ var apply = {
             });
 
            apply.read();
+
         });
 
         $('#apply').on('click', function(){
@@ -80,14 +82,15 @@ var apply = {
             url: "/jobs",
             method: "GET",
             success: function(data) {
-                $('#appliedTo ul').val('');
+                $('#appliedTo ul').html('');
                 console.log(data);
                 data = JSON.parse(data);
                 data.forEach(function(item){
                   console.log('this is the item',item);
                   $('#appliedTo ul').append(`<li><fieldset>${item.companyName} </br> ${item.salary} </br> ${item.location} </br> ${item.contactName} </br> ${item.contactNumber}
-                    </br> ${item.contactEmail} </br> ${item.comments}</fieldset></li>`);
+                    </br> ${item.contactEmail} </br> ${item.comments}</fieldset><button class='delete-btn' data-jobid="${item.jobId}">deleteAPP</button></li>`);
                 });
+                apply.destroyButton ();
             },
             error: function(err) {
                 console.error(err);
@@ -106,16 +109,25 @@ var apply = {
             }
         });
     },
-    destroy: function() {
+    destroy: function(id) {
         $.ajax({
-            url: "/jobs",
+            url: "/jobs/" + id,
             method: "DELETE",
             success:function(data) {
-
+                apply.read();
             },
             error: function(err) {
                 console.error(err);
             }
         });
+    },
+
+    destroyButton: function () {
+      $('.delete-btn').on('click', function (event){
+        event.preventDefault();
+        var clearAPP = $(this).data('jobid');
+        console.log("cleared", clearAPP);
+        apply.destroy(clearAPP);
+      })
     }
 };

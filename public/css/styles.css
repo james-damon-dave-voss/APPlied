@@ -110,3 +110,6 @@ aside {
     top: -9999px !important;
     left: -9999px !important;
 }
+.edit-hidden {
+  display: none;
+}

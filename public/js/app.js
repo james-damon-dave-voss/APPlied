@@ -89,8 +89,8 @@ var apply = {
                   console.log('this is the item',item);
                   $('#appliedTo ul').append(`<li data-jobid="${item.jobId}"><fieldset>
                     Company: <span>${item.companyName}</span> <input type="text" class="company-edit edit-hidden" value="${item.companyName}"></br>
-                    Salary: <span>${item.salary}</span> <input type="text" class="salary-edit edit-hidden" value="${item.salary}"></br>
-                    Location: <span>${item.location}</span> <input type="text" class="location-edit edit-hidden" value="${item.location}"></br>
+                    Salary: <span>${item.location}</span> <input type="text" class="location-edit edit-hidden" value="${item.location}"></br>
+                    Location: <span>${item.salary}</span> <input type="text" class="salary-edit edit-hidden" value="${item.salary}"></br>
                     Contact-Name: <span>${item.contactName}</span> <input type="text" class="contactName-edit edit-hidden" value="${item.contactName}"></br>
                     Contact-Number: <span>${item.contactNumber}</span> <input type="text" class="contactNumber-edit edit-hidden" value="${item.contactNumber}"></br>
                     Contact-Email: <span>${item.contactEmail}</span> <input type="text" class="contactEmail-edit edit-hidden" value="${item.contactEmail}"></br>

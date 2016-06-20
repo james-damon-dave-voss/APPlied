@@ -83,7 +83,7 @@ aside {
     cursor: pointer;
     margin: 0;
 }
-#appliedTo {
+.appliedTo {
     outline: 1px solid black;
     height: auto;
     width: auto;
@@ -94,6 +94,9 @@ aside {
 
 #appliedTo ul{
   list-style-type: none;
+}
+#appliedTo ul li{
+  background-color: gray;
 }
 #appliedTo ul li:hover{
   background-color: white;

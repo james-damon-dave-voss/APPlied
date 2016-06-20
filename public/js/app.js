@@ -38,7 +38,7 @@ var apply = {
 
             });
 
-          //  apply.read();
+           apply.read();
         });
 
         $('#apply').on('click', function(){
@@ -55,12 +55,8 @@ var apply = {
           };
           console.log(jobs);
           apply.create(JSON.stringify(jobs));
-          //apply.read();
+          apply.read();
         });
-
-        $('#append').on('click', function(){
-           apply.read();
-        })
     },
 
 
@@ -71,6 +67,7 @@ var apply = {
             contentType: "application/json; charset=utf-8",
             data: applyData,
             success: function(data) {
+                apply.read();
                 console.log(data);
             },
             error: function(err) {
@@ -83,12 +80,13 @@ var apply = {
             url: "/jobs",
             method: "GET",
             success: function(data) {
+                $('#appliedTo ul').val('');
                 console.log(data);
                 data = JSON.parse(data);
                 data.forEach(function(item){
                   console.log('this is the item',item);
                   $('#appliedTo ul').append(`<li><fieldset>${item.companyName} </br> ${item.salary} </br> ${item.location} </br> ${item.contactName} </br> ${item.contactNumber}
-                    </br> ${item.contactEmail} </br> ${item.comments}</fieldset>`);
+                    </br> ${item.contactEmail} </br> ${item.comments}</fieldset></li>`);
                 });
             },
             error: function(err) {

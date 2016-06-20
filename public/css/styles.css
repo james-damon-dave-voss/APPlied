@@ -85,10 +85,19 @@ aside {
 }
 #appliedTo {
     outline: 1px solid black;
-    height: 100px;
-    width: 35%;
+    height: auto;
+    width: auto;
     margin-left: 200px;
-    color: #737dc2;
+    color: #e0eff1;
+    background-color: gray;
+}
+
+#appliedTo ul{
+  list-style-type: none;
+}
+#appliedTo ul li:hover{
+  background-color: white;
+  color: black;
 }
 .radio {
     display: inline-block !important;

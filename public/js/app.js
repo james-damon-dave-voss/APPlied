@@ -87,8 +87,18 @@ var apply = {
                 data = JSON.parse(data);
                 data.forEach(function(item){
                   console.log('this is the item',item);
-                  $('#appliedTo ul').append(`<li><fieldset>${item.companyName} </br> ${item.salary} </br> ${item.location} </br> ${item.contactName} </br> ${item.contactNumber}
-                    </br> ${item.contactEmail} </br> ${item.comments}</fieldset><button class='delete-btn' data-jobid="${item.jobId}">deleteAPP</button></li>`);
+                  $('#appliedTo ul').append(`<li data-jobid="${item.jobId}"><fieldset>
+                    Company: <span>${item.companyName}</span> <input type="text" class="company-edit edit-hidden" value="${item.companyName}"></br>
+                    Salary: <span>${item.salary}</span> <input type="text" class="salary-edit edit-hidden" value="${item.salary}"></br>
+                    Location: <span>${item.location}</span> <input type="text" class="location-edit edit-hidden" value="${item.location}"></br>
+                    Contact-Name: <span>${item.contactName}</span> <input type="text" class="contactName-edit edit-hidden" value="${item.contactName}"></br>
+                    Contact-Number: <span>${item.contactNumber}</span> <input type="text" class="contactNumber-edit edit-hidden" value="${item.contactNumber}"></br>
+                    Contact-Email: <span>${item.contactEmail}</span> <input type="text" class="contactEmail-edit edit-hidden" value="${item.contactEmail}"></br>
+                    Comments: <span>${item.comments}</span> <input type="text" class="comments-edit edit-hidden" value="${item.comments}"></fieldset>
+                    <button class='delete-btn' data-jobid="${item.jobId}">deleteAPP</button>
+                    <button class="edit-btn edit-hidden" data-jobid="${item.jobId}">editAPP</button>
+                    <button class="show-edit-btn">edit</button>
+                    </li>`);
                 });
                 apply.destroyButton ();
             },
@@ -97,15 +107,17 @@ var apply = {
             }
         });
     },
-    update: function() {
+    update: function(applyData) {
         $.ajax({
             url: "/jobs",
             method: "PUT",
+            contentType: "application/json; charset=utf-8",
+            data: applyData,
             success:function(data) {
-
+              apply.read();
             },
             error:function(err) {
-
+              console.error(err);
             }
         });
     },
@@ -128,6 +140,31 @@ var apply = {
         var clearAPP = $(this).data('jobid');
         console.log("cleared", clearAPP);
         apply.destroy(clearAPP);
-      })
+      });
+      $(".edit-btn").on("click", function (event){
+        event.preventDefault();
+        var appParent = $(this).parent();
+        var jobs = {
+          companyName: appParent.find('.company-edit').val(),
+          salary: appParent.find('.salary-edit').val(),
+          applied:  true,
+          location:  appParent.find('.location-edit').val(),
+          contactName:  appParent.find('.contactName-edit').val(),
+          contactNumber:  appParent.find('.contactNumber-edit').val(),
+          contactEmail:  appParent.find('.contactEmail-edit').val(),
+          comments:  appParent.find('.comments-edit').val(),
+          jobId: appParent.data("jobid"),
+        };
+        console.log("edited", jobs);
+        apply.update(JSON.stringify(jobs));
+      });
+      $('.show-edit-btn').on('click', function (event){
+        event.preventDefault();
+        var editAPP = $(this).parent();
+        console.log("edited", editAPP);
+        editAPP.find("span").toggleClass("edit-hidden");
+        editAPP.find("input").toggleClass("edit-hidden");
+        editAPP.find("button").toggleClass("edit-hidden");
+      });
     }
 };

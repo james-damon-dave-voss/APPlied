@@ -4,7 +4,7 @@ var sass = require('gulp-sass');
 var uglify = require('gulp-uglify');
 var htmlhint = require("gulp-htmlhint");
 var beautify = require('gulp-beautify')
-
+var surge = require('gulp-surge');
 gulp.task('default',['html','css','js']);
 
 gulp.task('html', function(){
@@ -37,6 +37,13 @@ gulp.task('js', function () {
             mangle: true,
         }))
         .pipe(gulp.dest('./public'));
+});
+
+gulp.task('deploy', [], function () {
+  return surge({
+    project: './public',         // Path to your static build directory
+    domain: 'apply.surge.sh'  // Your domain or Surge subdomain
+  })
 });
 
 gulp.task('watch', function () {
